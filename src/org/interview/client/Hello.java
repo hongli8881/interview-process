@@ -51,6 +51,8 @@ public class Hello implements EntryPoint {
     Integer numberOfCompletedCall = new Integer(0);
     final Label countCallLabel = new Label();
     final Button countCallButton = new Button("Count Calls");
+    
+    final Button clearButton = new Button("Clear");
 	
     
     /*
@@ -120,6 +122,12 @@ public class Hello implements EntryPoint {
             }
         });
         
+        clearButton.addClickHandler(new ClickHandler() {
+        	public void onClick(ClickEvent event) {
+        		clearPersonInformation(person);
+        	}
+        });
+        
 
         // Create a handler for the sendButton and nameField
         class MyHandler implements ClickHandler, KeyUpHandler {
@@ -147,6 +155,10 @@ public class Hello implements EntryPoint {
                 errorLabel.setText("");
                 String textToServer = nameField.getText();
                 if (!FieldVerifier.isValidName(textToServer)) {
+                    errorLabel.setText("Please enter more than 4 caracters");
+                    return;
+                }
+                if (textToServer.length < 4) {
                     errorLabel.setText("Please enter more than 4 caracters");
                     return;
                 }
@@ -243,6 +255,11 @@ public class Hello implements EntryPoint {
 	private void updatePersonInformation(PersonInfo person){
 		personId.setText(String.valueOf(person.getPersonID()));
 		personName.setText(person.getName());
+	}
+	
+	private void clearPersonInformation(PersonInfo person){
+		personId.setText("");
+		personName.setText("");
 	}
 	
 }
